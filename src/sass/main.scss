@@ -1,0 +1,41 @@
+@mixin wrapper-base {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#imageFormWrapper {
+	background-color: rgba(80, 80, 80, .8);
+	z-index: 11;
+	@include wrapper-base;
+}
+
+#loadingWrapper {
+	display: none;
+	background-color: rgba(200, 200, 200, .8);
+	z-index: 99;
+	@include wrapper-base;
+
+	#spin {
+		border: 8px solid #fafafa;
+		border-radius: 50%;
+		border-top: 8px solid #3498db;
+		width: 70px;
+		height: 70px;
+		animation: spin-anime 1.0s infinite linear;
+		margin: 50px auto 10px;
+	}
+
+	@keyframes spin-anime {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	#loadMsg {
+		color: #FFFFFF;
+		text-align: center;
+	}
+}
