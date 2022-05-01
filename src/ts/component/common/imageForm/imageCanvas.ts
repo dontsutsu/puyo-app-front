@@ -179,6 +179,9 @@ export class ImageCanvas {
 	 * 　2) 四隅の座標位置から枠を再描画
 	 */
 	private updateFrame(): void {
+		// 画像がまだ設定されていない場合は何も処理しない
+		if (this._img === undefined) return;
+
 		this._offset = (this._offset + 0.5) % ImageCanvas.OFFSET;
 
 		this._frame.uncache();
