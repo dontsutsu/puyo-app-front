@@ -36,7 +36,7 @@ export class ImageForm extends EventDispatcher {
 		this._frameList = [];
 
 		this._$wrapper.hide();
-		
+
 		// event
 		this._$imageFile.on("change", this.changeImage.bind(this));
 		this._$trimmode.on("change", () => { this._canvas.changeMode(this._$trimmode.filter(":checked").val() as string); });
@@ -159,8 +159,8 @@ export class ImageForm extends EventDispatcher {
 	}
 
 	/**
-	 * 
-	 * @param {number[][][]} contours 
+	 *
+	 * @param {number[][][]} contours
 	 */
 	private setFrameList(contours: number[][][]): void {
 		const frameList: Coordinate[][] = [];
@@ -193,8 +193,8 @@ export class ImageForm extends EventDispatcher {
 	}
 
 	/**
-	 * 
-	 * @param index 
+	 *
+	 * @param {number} index
 	 */
 	private setFrame(index: number): void {
 		if (index >= this._frameList.length) new Error();

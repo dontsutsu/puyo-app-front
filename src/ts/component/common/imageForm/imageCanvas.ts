@@ -31,7 +31,7 @@ export class ImageCanvas {
 	private _bmpContainer: Container;
 	private _bmp!: Bitmap;
 	private _img!: HTMLImageElement;
-	
+
 	private _frameContainer: Container;
 	private _frame: Shape;
 	private _corners: Shape[];
@@ -52,7 +52,7 @@ export class ImageCanvas {
 		Ticker.addEventListener("tick", this._stage);
 
 		this._mode = mode;
-		
+
 		this._bmpContainer = new Container();
 		this._stage.addChild(this._bmpContainer);
 
@@ -124,8 +124,8 @@ export class ImageCanvas {
 	}
 
 	/**
-	 * 
-	 * @param {Coordinate[]} frame 
+	 *
+	 * @param {Coordinate[]} frame
 	 */
 	public setFrame(frame: Coordinate[]): void {
 		for (let i = 0; i < frame.length; i++) {
@@ -135,7 +135,7 @@ export class ImageCanvas {
 
 	/**
 	 * 画像を更新する。
-	 * @param {HTMLImageElement} img 画像 
+	 * @param {HTMLImageElement} img 画像
 	 */
 	public updateImage(img: HTMLImageElement): void {
 		// 既に画像がある場合はremove
@@ -181,17 +181,37 @@ export class ImageCanvas {
 	private updateFrame(): void {
 		this._offset = (this._offset + 0.5) % ImageCanvas.OFFSET;
 
+		this._frame.uncache();
+
 		this._frame.graphics
 			.c()
-			.s("#FF0000")
-			.ss(2)
+			.f("#000000")
+			.dr(0, 0, this._img.naturalWidth, this._img.naturalHeight);
+		this._frame.alpha = 0.8;
+		this._frame.cache(0, 0, this._img.naturalWidth, this._img.naturalHeight);
+
+		this._frame.graphics
+			.c()
+			.f("#FF0000")
+			.mt(this._cornerCoords[ImageCanvas.LT].x, this._cornerCoords[ImageCanvas.LT].y)
+			.lt(this._cornerCoords[ImageCanvas.RT].x, this._cornerCoords[ImageCanvas.RT].y)
+			.lt(this._cornerCoords[ImageCanvas.RB].x, this._cornerCoords[ImageCanvas.RB].y)
+			.lt(this._cornerCoords[ImageCanvas.LB].x, this._cornerCoords[ImageCanvas.LB].y)
+			.lt(this._cornerCoords[ImageCanvas.LT].x, this._cornerCoords[ImageCanvas.LT].y);
+		this._frame.updateCache("destination-out");
+
+		this._frame.graphics
+			.c()
+			.s("#FFFFFF")
+			.ss(0.5)
 			.sd(ImageCanvas.SEGMENT, this._offset)
 			.mt(this._cornerCoords[ImageCanvas.LT].x, this._cornerCoords[ImageCanvas.LT].y)
 			.lt(this._cornerCoords[ImageCanvas.RT].x, this._cornerCoords[ImageCanvas.RT].y)
 			.lt(this._cornerCoords[ImageCanvas.RB].x, this._cornerCoords[ImageCanvas.RB].y)
 			.lt(this._cornerCoords[ImageCanvas.LB].x, this._cornerCoords[ImageCanvas.LB].y)
 			.lt(this._cornerCoords[ImageCanvas.LT].x, this._cornerCoords[ImageCanvas.LT].y);
-		
+		this._frame.updateCache("source-over");
+
 		for (let i = 0; i < this._corners.length; i++) {
 			const frame = this._corners[i];
 			const coord = this._cornerCoords[i];
@@ -251,7 +271,7 @@ export class ImageCanvas {
 
 	/**
 	 * 縦隣のindexを取得。
-	 * @param {number} index 
+	 * @param {number} index
 	 * @returns {number} 縦隣のindex
 	 */
 	private static getVNeighborIndex(index: number): number {
@@ -269,7 +289,7 @@ export class ImageCanvas {
 
 	/**
 	 * indexが上か。
-	 * @param {number} index 
+	 * @param {number} index
 	 * @returns {boolean} 上か
 	 */
 	private static isTop(index: number): boolean {
@@ -278,7 +298,7 @@ export class ImageCanvas {
 
 	/**
 	 * indexが下か。
-	 * @param {number} index 
+	 * @param {number} index
 	 * @returns {boolean} 下か
 	 */
 	private static isBottom(index: number): boolean {
@@ -287,7 +307,7 @@ export class ImageCanvas {
 
 	/**
 	 * indexが右か。
-	 * @param {number} index 
+	 * @param {number} index
 	 * @returns {boolean} 右か
 	 */
 	private static isRight(index: number): boolean {
@@ -296,7 +316,7 @@ export class ImageCanvas {
 
 	/**
 	 * indexが左か。
-	 * @param {number} index 
+	 * @param {number} index
 	 * @returns {boolean} 左か
 	 */
 	private static isLeft(index: number): boolean {
