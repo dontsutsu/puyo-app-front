@@ -54,7 +54,7 @@ export class NextCanvas {
 		$("#" + canvasId).attr("height", 1 + Math.ceil(h));
 
 		// frame
-		const frame = this.createFrameContainer();
+		const frame = this.createFrame();
 		this._stage.addChild(frame);
 
 		// container
@@ -70,7 +70,7 @@ export class NextCanvas {
 
 	/**
 	 * 初期化する。
-	 * @param {string} axisColor ネクスト軸ぷよの色 
+	 * @param {string} axisColor ネクスト軸ぷよの色
 	 * @param {string} childColor ネクスト子ぷよの色
 	 * @param {string} axisColor2 ダブネク軸ぷよの色
 	 * @param {string} childColor2 ダブネク子ぷよの色
@@ -89,11 +89,11 @@ export class NextCanvas {
 	}
 
 	/**
-	 * 
-	 * @param axisColor 
-	 * @param childColor 
-	 * @param axisColor2 
-	 * @param childColor2 
+	 *
+	 * @param axisColor
+	 * @param childColor
+	 * @param axisColor2
+	 * @param childColor2
 	 */
 	public change(axisColor: string, childColor: string, axisColor2: string, childColor2: string): void {
 		this._axisPuyo.changeColor(axisColor);
@@ -104,7 +104,7 @@ export class NextCanvas {
 
 	/**
 	 * ネクストをひとつ進める。
-	 * @param {color} axisColor2 新しいダブネク軸ぷよの色 
+	 * @param {color} axisColor2 新しいダブネク軸ぷよの色
 	 * @param {color} childColor2 新しいダブネク子ぷよの色
 	 */
 	public advance(axisColor2: string, childColor2: string): void {
@@ -130,7 +130,7 @@ export class NextCanvas {
 			.to({y: ncCoord.y})
 			.to({y: ocToY}, NextCanvas.MOVE_TIME * mode)
 			.call(() => { this._container.removeChild(oldChildPuyo); });
-		
+
 		// new next
 		const newAxisPuyo = this._axisPuyo2;
 		const newChildPuyo = this._childPuyo2;
@@ -158,7 +158,7 @@ export class NextCanvas {
 		const ncTween2 = Tween.get(newChildPuyo2)
 			.to({y: ndcFromY})
 			.to({y: ncCoord2.y}, NextCanvas.MOVE_TIME * mode);
-		
+
 		this._container.addChild(newAxisPuyo2, newChildPuyo2);
 		this._axisPuyo = newAxisPuyo;
 		this._childPuyo = newChildPuyo;
@@ -174,9 +174,9 @@ export class NextCanvas {
 
 	/**
 	 * フレームを生成する。
-	 * @returns {Container} Container
+	 * @returns {Shape} フレーム
 	 */
-	private createFrameContainer(): Container {
+	private createFrame(): Shape {
 		const oFrameColor = "#E0E0E0";
 		const iFrameColor = this._is2p ? UIConst.TWO_P_COLOR : UIConst.ONE_P_COLOR;
 
@@ -188,35 +188,26 @@ export class NextCanvas {
 		const iRad = oRad / 5 * 4;
 
 		// frame
-		const oFrameN = new Shape();
-		oFrameN.graphics
+		const frame = new Shape();
+		frame.skewY = NextCanvas.F_SKEW_DEG;
+
+		frame.graphics
 			.f(oFrameColor)
 			.rr(0.5, 0.5, NextCanvas.F_BASE_X / cos, NextCanvas.F_BASE_Y + NextCanvas.F_BASE_X * sin, oRad);
-		oFrameN.skewY = NextCanvas.F_SKEW_DEG;
 
-		const oFrameD = new Shape();
-		oFrameD.graphics
+		frame.graphics
 			.f(oFrameColor)
 			.rr(NextCanvas.F_X_SHIFT + 0.5, NextCanvas.F_Y_SHIFT + 0.5, NextCanvas.F_BASE_X / cos, NextCanvas.F_BASE_Y + NextCanvas.F_BASE_X * sin, oRad);
-		oFrameD.skewY = NextCanvas.F_SKEW_DEG;
 
-		const iFrameN = new Shape();
-		iFrameN.graphics
+		frame.graphics
 			.f(iFrameColor)
 			.rr(NextCanvas.F_O_PAD + 0.5, NextCanvas.F_O_PAD + 0.5, (NextCanvas.F_BASE_X - NextCanvas.F_O_PAD * 2) / cos, (NextCanvas.F_BASE_Y - NextCanvas.F_O_PAD * 2) + (NextCanvas.F_BASE_X - NextCanvas.F_O_PAD * 2) * sin, iRad);
-		iFrameN.skewY = NextCanvas.F_SKEW_DEG;
 
-		const iFrameD = new Shape();
-		iFrameD.graphics
+		frame.graphics
 			.f(iFrameColor)
 			.rr(NextCanvas.F_X_SHIFT + NextCanvas.F_O_PAD + 0.5, NextCanvas.F_Y_SHIFT + NextCanvas.F_O_PAD + 0.5, (NextCanvas.F_BASE_X - NextCanvas.F_O_PAD * 2) / cos, (NextCanvas.F_BASE_Y - NextCanvas.F_O_PAD * 2) + (NextCanvas.F_BASE_X - NextCanvas.F_O_PAD * 2) * sin, iRad);
-		iFrameD.skewY = NextCanvas.F_SKEW_DEG;
-		
-		const frameContainer = new Container();
-		frameContainer.addChild(oFrameN, oFrameD);
-		frameContainer.addChild(iFrameN, iFrameD);
-		
-		return frameContainer;
+
+		return frame;
 	}
 
 	/**
@@ -224,7 +215,7 @@ export class NextCanvas {
 	 * @param {number} next 0：ネクスト、1：ダブネク
 	 * @param {number} type 0：子ぷよ、1：軸ぷよ
 	 * @param {string} color 色
-	 * @returns 
+	 * @returns
 	 */
 	private static createPuyoShape(next: number, type: number, color: string): PuyoShape {
 		return new PuyoShape(NextCanvas.getCanvasCoordinate(next, type), color, NextCanvas.PUYO_SIZE);

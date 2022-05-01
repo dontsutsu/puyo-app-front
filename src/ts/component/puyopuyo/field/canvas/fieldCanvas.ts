@@ -27,7 +27,7 @@ export class FieldCanvas extends EventDispatcher {
 	private static readonly DROP_V = 50;
 	private static readonly ERASE_TIME = 500;
 	private static readonly STEP_ERASE_TIME = 300;
-	
+
 	// properties
 	private _is2P: boolean;
 	private _stage: Stage;
@@ -59,7 +59,7 @@ export class FieldCanvas extends EventDispatcher {
 		$("#" + canvasId).attr("height", 1 + Math.ceil(h));
 
 		// frame
-		const frame = this.createFrameContainer();
+		const frame = this.createFrame();
 		this._stage.addChild(frame);
 
 		// container
@@ -141,8 +141,8 @@ export class FieldCanvas extends EventDispatcher {
 	// method
 	/**
 	 * 色を変更する。
-	 * @param {Coordinate} coord 論理座標 
-	 * @param {string} color 色 
+	 * @param {Coordinate} coord 論理座標
+	 * @param {string} color 色
 	 */
 	public changeColor(coord: Coordinate, color: string): void {
 		this._array[coord.y][coord.x].changeColor(color);
@@ -184,7 +184,7 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ぷよを消す。
-	 * @param {Coordinate[]} coordList 消す座標のリスト 
+	 * @param {Coordinate[]} coordList 消す座標のリスト
 	 */
 	public erase(coordList: Coordinate[]): void {
 		const mode = TimelineQueue.instance.mode;
@@ -235,7 +235,7 @@ export class FieldCanvas extends EventDispatcher {
 				.to({y: FieldCanvas.getCanvasCoordinate(fromAxisCoord).y})
 				.to({y: FieldCanvas.getCanvasCoordinate(toAxisCoord).y}, FieldCanvas.DROP_V * (fromAxisCoord.y - toAxisCoord.y) * mode)
 				.call(() => { this._container.removeChild(removePuyo); });
-			
+
 			timeline.addTween(axisTween);
 		}
 
@@ -249,7 +249,7 @@ export class FieldCanvas extends EventDispatcher {
 				.to({y: FieldCanvas.getCanvasCoordinate(fromChildCoord).y})
 				.to({y: FieldCanvas.getCanvasCoordinate(toChildCoord).y}, FieldCanvas.DROP_V * (fromChildCoord.y - toChildCoord.y) * mode)
 				.call(() => { this._container.removeChild(removePuyo); });
-			
+
 			timeline.addTween(childTween);
 		}
 
@@ -258,7 +258,7 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * スコアの表示を更新する。
-	 * @param {number} score スコア 
+	 * @param {number} score スコア
 	 */
 	public updateScore(score: number): void {
 		const s = FieldCanvas.formatScore(score);
@@ -267,8 +267,8 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * スコアに計算式を表示する。
-	 * @param {number} erase 消去数 
-	 * @param {number} bonus ボーナス 
+	 * @param {number} erase 消去数
+	 * @param {number} bonus ボーナス
 	 */
 	public updateScoreFormula(erase: number, bonus: number): void {
 		const s = (erase * 10) + " × " + bonus;
@@ -277,8 +277,8 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ツモを落とすガイドを表示する。
-	 * @param {TsumoInterface} axis 
-	 * @param {TsumoInterface} child 
+	 * @param {TsumoInterface} axis
+	 * @param {TsumoInterface} child
 	 * @param {Coordinate} toAxisCoord 軸ぷよが落ちる先の座標
 	 * @param {Coordinate} toChildCoord 子ぷよが落ちる先の座標
 	 */
@@ -329,9 +329,9 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * フレームを生成する。
-	 * @returns {Container} フレームのContainer
+	 * @returns {Shape} フレーム
 	 */
-	private createFrameContainer(): Container {
+	private createFrame(): Shape {
 		const oFrameColor = "#E0E0E0";
 		const iFrameColor = this._is2P ? UIConst.TWO_P_COLOR : UIConst.ONE_P_COLOR;
 		const skew = FieldCanvas.F_SKEW_DEG * (this._is2P ? 1 : -1);
@@ -340,29 +340,25 @@ export class FieldCanvas extends EventDispatcher {
 		const sin = MathUtil.sinDeg(FieldCanvas.F_SKEW_DEG);
 		const cos = MathUtil.cosDeg(FieldCanvas.F_SKEW_DEG);
 		const y = this._is2P ? 0 : FieldCanvas.F_BASE_X * sin;
-		
+
 		// 角丸のサイズ
 		const oRad = FieldCanvas.PUYO_SIZE / 3;
 		const iRad = oRad / 5 * 4;
 
 		// frame
-		const oFrame = new Shape();
-		oFrame.graphics
+		const frame = new Shape();
+		frame.skewY = skew;
+		frame.y = y;
+
+		frame.graphics
 			.f(oFrameColor)
 			.rr(0.5, 0.5, FieldCanvas.F_BASE_X / cos, FieldCanvas.F_BASE_Y + FieldCanvas.F_BASE_X * sin, oRad);
-		oFrame.skewY = skew;
 
-		const iFrame = new Shape();
-		iFrame.graphics
+		frame.graphics
 			.f(iFrameColor)
 			.rr(FieldCanvas.F_O_PAD + 0.5, FieldCanvas.F_O_PAD + 0.5, (FieldCanvas.F_BASE_X - FieldCanvas.F_O_PAD * 2) / cos, (FieldCanvas.F_BASE_Y - FieldCanvas.F_O_PAD * 2) + (FieldCanvas.F_BASE_X - FieldCanvas.F_O_PAD * 2) * sin, iRad);
-		iFrame.skewY = skew;
 
-		const container = new Container();
-		container.addChild(oFrame, iFrame);
-		container.y = y;
-
-		return container;
+		return frame;
 	}
 
 	/**
@@ -381,7 +377,7 @@ export class FieldCanvas extends EventDispatcher {
 			.mt(uni * 0, uni * 1)
 			.lt(uni * 1, uni * 0)
 			.lt(uni * 2, uni * 1)
-			.lt(uni * 3, uni * 0)			
+			.lt(uni * 3, uni * 0)
 			.lt(uni * 4, uni * 1)
 			.lt(uni * 3, uni * 2)
 			.lt(uni * 4, uni * 3)
@@ -399,7 +395,7 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ぷよをセットする。
-	 * @param {Coordinate} coord 論理座標 
+	 * @param {Coordinate} coord 論理座標
 	 * @param {PuyoShape} puyo PuyoShape
 	 */
 	private setPuyo(coord: Coordinate, puyo: PuyoShape): void {
@@ -408,7 +404,7 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ぷよを取得する。
-	 * @param {Coordinate} coord 論理座標 
+	 * @param {Coordinate} coord 論理座標
 	 * @returns {PuyoShape} PuyoShape
 	 */
 	private getPuyo(coord: Coordinate): PuyoShape {
@@ -427,7 +423,7 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * 論理座標から表示座標を取得する。
-	 * @param {Coordinate} coord 論理座標 
+	 * @param {Coordinate} coord 論理座標
 	 * @returns {Coordinate} 表示座標
 	 */
 	private static getCanvasCoordinate(coord: Coordinate): Coordinate {
@@ -438,9 +434,9 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * PuyoShapeを生成する。
-	 * @param {Coordinate} coord 論理座標 
-	 * @param {string} [color] 色 
-	 * @returns {PuyoShape} PuyoShape 
+	 * @param {Coordinate} coord 論理座標
+	 * @param {string} [color] 色
+	 * @returns {PuyoShape} PuyoShape
 	 */
 	private static createPuyoShape(coord: Coordinate, color: string = PuyoConst.Color.N): PuyoShape {
 		return new PuyoShape(FieldCanvas.getCanvasCoordinate(coord), color, FieldCanvas.PUYO_SIZE);
@@ -448,8 +444,8 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * GridCellShapeを生成する。
-	 * @param {Coordinate} coord 論理座標 
-	 * @returns {GridCellShape} GridCellShape 
+	 * @param {Coordinate} coord 論理座標
+	 * @returns {GridCellShape} GridCellShape
 	 */
 	private static createGridCellShape(coord: Coordinate): GridCellShape {
 		return new GridCellShape(FieldCanvas.getCanvasCoordinate(coord), FieldCanvas.PUYO_SIZE);
