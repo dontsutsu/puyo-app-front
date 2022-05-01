@@ -26,44 +26,4 @@ export class Util {
 	public static getRandomNumber(size: number): number {
 		return Math.random() * size | 0;
 	}
-
-	/**
-	 * ImageDataから指定の座標のRGBA値を取得する。
-	 * @param {ImageData} imageData ImageData
-	 * @param {Coordinate} coord 座標
-	 * @returns {number[]} RGBA値
-	 */
-	public static getRGBAFromImageData(imageData: ImageData, coord: Coordinate): number[] {
-		const index = (coord.x + coord.y * imageData.width) * 4;
-		return [imageData.data[index], imageData.data[index+1], imageData.data[index+2], imageData.data[index+3]];
-	}
-
-	/**
-	 * ImageDataの指定の座標にRGBA値を設定する。
-	 * @param {ImageData} imageData 
-	 * @param {Coordinate} coord 
-	 * @param {number[]} rgba RGBA値
-	 */
-	public static setRGBAToImageData(imageData: ImageData, coord: Coordinate, rgba: number[]): void {
-		if (rgba.length != 4) throw new Error();
-		const index = (coord.x + coord.y * imageData.width) * 4;
-		for (let i = 0; i < 4; i++) {
-			imageData.data[index+i] = rgba[i];
-		}
-	}
-
-	/**
-	 * BitmapをImageDataに変換する。
-	 * @param {Bitmap} bmp Bitmap
-	 * @returns {ImageData} ImageData
-	 */
-	public static convertBitmapToImageData(bmp: Bitmap): ImageData {
-		const w = bmp.image.width;
-		const h = bmp.image.height;
-		bmp.cache(0, 0, w, h);
-		const bmpcanvas = bmp.cacheCanvas as HTMLCanvasElement;
-		const ctx = bmpcanvas.getContext("2d");
-		if (ctx === null) throw new Error();
-		return ctx.getImageData(0, 0, w, h);
-	}
 }
