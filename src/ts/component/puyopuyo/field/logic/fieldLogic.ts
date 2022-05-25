@@ -4,6 +4,7 @@ import { TsumoInterface } from "../../tsumo/logic/tsumoInterface";
 import { FieldCanvas } from "../canvas/fieldCanvas";
 import { Connect } from "./connect";
 import { FieldPuyo } from "./fieldPuyo";
+import { ChainInfoInterface } from "./chainInfoInterface";
 
 /**
  * Field (Logic)
@@ -12,6 +13,7 @@ export class FieldLogic {
 	private _canvas: FieldCanvas;
 	private _array: FieldPuyo[][];
 	private _totalScore: number;
+	private _lastChainInfo: ChainInfoInterface[];
 	
 	/**
 	 * constructor
@@ -21,6 +23,7 @@ export class FieldLogic {
 
 		// score
 		this._totalScore = 0;
+		this._lastChainInfo = [];
 
 		// array
 		this._array = [];
@@ -40,6 +43,7 @@ export class FieldLogic {
 	public start(): void {
 		let chain = 0;
 		let isErase: boolean;
+		this._lastChainInfo.length = 0;
 		do {
 			chain++;
 
@@ -325,9 +329,11 @@ export class FieldLogic {
 
 		// 連結ボーナス
 		let connectBonus = 0;
+		const connectList: number[] = [];
 		for (const connect of connectArray) {
 			const index = (connect.size > 11 ? 11 : connect.size) - 4;
 			connectBonus += PuyoConst.BONUS.CONNECT[index];
+			connectList.push(connect.size);
 		}
 		
 		// 色数ボーナス
@@ -343,6 +349,14 @@ export class FieldLogic {
 		// スコア計算
 		const score = erase * bonus * 10;
 		this._totalScore += score;
+
+		let chainInfo: ChainInfoInterface = {
+			chain: chain,
+			color: colorArray.length,
+			connect: connectList,
+			score: score
+		};
+		this._lastChainInfo.push(chainInfo);
 
 		// view更新
 		this._canvas.updateScoreFormula(erase, bonus);
@@ -458,5 +472,9 @@ export class FieldLogic {
 	// accessor
 	get totalScore(): number {
 		return this._totalScore;
+	}
+
+	get lastChainInfo(): ChainInfoInterface[] {
+		return this._lastChainInfo;
 	}
 }

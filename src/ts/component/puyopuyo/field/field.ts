@@ -2,6 +2,7 @@ import { EventDispatcher } from "@createjs/easeljs";
 import { Coordinate } from "../../../math/coordinate";
 import { TsumoInterface } from "../tsumo/logic/tsumoInterface";
 import { FieldCanvas } from "./canvas/fieldCanvas";
+import { ChainInfoInterface } from "./logic/chainInfoInterface";
 import { FieldLogic } from "./logic/fieldLogic";
 
 /**
@@ -111,6 +112,10 @@ export class Field extends EventDispatcher {
 
 	public removeGuide(): void {
 		this._canvas.removeGuide();
+	}
+
+	public getLastChainInfo(): ChainInfoInterface[] {
+		return this._logic.lastChainInfo;
 	}
 
 	/**
