@@ -2,6 +2,7 @@ import { PuyoConst } from "../../../../util/const";
 import { Coordinate } from "../../../../math/coordinate";
 import { TsumoCanvas } from "../canvas/tsumoCanvas";
 import { EnumPosition } from "./enumPosition";
+import { TsumoPuyoInterface } from "./tsumoPuyoInterface";
 import { TsumoInterface } from "./tsumoInterface";
 
 /**
@@ -34,10 +35,12 @@ export class TsumoLogic {
 		this._axisX = PuyoConst.Tsumo.INI_X;
 		this._position = PuyoConst.Tsumo.INI_POSITION;
 
-		const axis: TsumoInterface = { color: this._axisColor, coord: this.axisCoord };
-		const child: TsumoInterface = { color: this._childColor, coord: this.childCoord };
+		const tsumo: TsumoInterface = {
+			axis: { color: this._axisColor, coord: this.axisCoord },
+			child: { color: this._childColor, coord: this.childCoord }
+		}
 
-		this._canvas.set(axis, child, init);
+		this._canvas.set(tsumo, init);
 	}
 
 	/**
@@ -51,10 +54,12 @@ export class TsumoLogic {
 		this._axisX = PuyoConst.Tsumo.INI_X;
 		this._position = PuyoConst.Tsumo.INI_POSITION;
 
-		const axis: TsumoInterface = { color: this._axisColor, coord: this.axisCoord };
-		const child: TsumoInterface = { color: this._childColor, coord: this.childCoord };
+		const tsumo: TsumoInterface =  {
+			axis: { color: this._axisColor, coord: this.axisCoord },
+			child: { color: this._childColor, coord: this.childCoord }
+		};
 
-		this._canvas.change(axis, child);
+		this._canvas.change(tsumo);
 	}
 
 	/**
@@ -101,18 +106,18 @@ export class TsumoLogic {
 
 	/**
 	 * ツモの状態を取得する。
-	 * @returns {{axis: TsumoInterface, child: TsumoInterface}} ツモ
+	 * @returns {TsumoInterface} ツモ
 	 */
-	public getTsumo(): {axis: TsumoInterface, child: TsumoInterface} {
+	public getTsumo(): TsumoInterface {
 		return { axis: this.axis, child: this.child };
 	}
 
 	/**
 	 * ツモをフィールドに落とす。
 	 * フィールドに渡す用のツモの情報を返す。
-	 * @returns {{axis: TsumoInterface, child: TsumoInterface}} ツモ
+	 * @returns {TsumoInterface} ツモ
 	 */
-	public drop(): {axis: TsumoInterface, child: TsumoInterface} {
+	public drop(): TsumoInterface {
 		// view更新
 		this._canvas.drop(this.axisCoord, this.childCoord);
 
@@ -136,11 +141,11 @@ export class TsumoLogic {
 		return this.axisCoord.addCoord(this._position.childRelativeCoord);
 	}
 
-	get axis(): TsumoInterface {
+	get axis(): TsumoPuyoInterface {
 		return { color: this.axisColor, coord: this.axisCoord };
 	}
 
-	get child(): TsumoInterface {
+	get child(): TsumoPuyoInterface {
 		return { color: this.childColor, coord: this.childCoord };
 	}
 }

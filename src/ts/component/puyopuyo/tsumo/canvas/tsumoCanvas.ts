@@ -3,12 +3,12 @@ import { Coordinate } from "../../../../math/coordinate";
 import { FieldCanvas } from "../../field/canvas/fieldCanvas";
 import { GridCellShape } from "../../../canvasparts/gridCellShape";
 import { PuyoShape } from "../../../canvasparts/puyoShape";
-import { TsumoInterface } from "../logic/tsumoInterface";
 import { TimelineQueue } from "../../../../timeline/timelineQueue";
+import { TsumoInterface } from "../logic/tsumoInterface";
 
-import $ from "jquery";
 import { Container, Stage } from "@createjs/easeljs";
 import { Ticker, Tween, Timeline, Ease } from "@createjs/tweenjs";
+import $ from "jquery";
 
 /**
  * Tsumo (UI)
@@ -144,11 +144,10 @@ export class TsumoCanvas {
 
 	/**
 	 * ネクストのぷよをツモに設定する。
-	 * @param {TsumoInterface} axis 軸ぷよ
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ
 	 * @param {boolean} init 初期化時の処理かどうか
 	 */
-	public set(axis: TsumoInterface, child: TsumoInterface, init: boolean): void {
+	public set(tsumo: TsumoInterface, init: boolean): void {
 		if (init) {
 			if (this._axis !== undefined) this._container.removeChild(this._axis);
 			if (this._child !== undefined) this._container.removeChild(this._child);
@@ -157,13 +156,13 @@ export class TsumoCanvas {
 		const mode = TimelineQueue.instance.mode;
 		const diff = 3;
 
-		const fromAxisCanvasCoord = TsumoCanvas.getCanvasCoordinate(axis.coord.clone().addY(diff));
-		const toAixsCanvasCoord = TsumoCanvas.getCanvasCoordinate(axis.coord);
-		const fromChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(child.coord.clone().addY(diff));
-		const toChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(child.coord);
+		const fromAxisCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord.clone().addY(diff));
+		const toAixsCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord);
+		const fromChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.child.coord.clone().addY(diff));
+		const toChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.child.coord);
 
-		this._axis = new PuyoShape(fromAxisCanvasCoord, axis.color, TsumoCanvas.PUYO_SIZE);
-		this._child = new PuyoShape(fromChildCanvasCoord, child.color, TsumoCanvas.PUYO_SIZE);
+		this._axis = new PuyoShape(fromAxisCanvasCoord, tsumo.axis.color, TsumoCanvas.PUYO_SIZE);
+		this._child = new PuyoShape(fromChildCanvasCoord, tsumo.child.color, TsumoCanvas.PUYO_SIZE);
 		this._container.addChild(this._axis, this._child);
 
 		const axisTween = Tween.get(this._axis)
@@ -181,12 +180,11 @@ export class TsumoCanvas {
 
 	/**
 	 * ツモを変更する。
-	 * @param {TsumoInterface} axis 軸ぷよ
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo 軸ぷよ
 	 */
-	public change(axis: TsumoInterface, child: TsumoInterface): void {
-		this._axis.changeColorAndCoord(axis.color, TsumoCanvas.getCanvasCoordinate(axis.coord));
-		this._child.changeColorAndCoord(child.color, TsumoCanvas.getCanvasCoordinate(child.coord));
+	public change(tsumo: TsumoInterface): void {
+		this._axis.changeColorAndCoord(tsumo.axis.color, TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord));
+		this._child.changeColorAndCoord(tsumo.child.color, TsumoCanvas.getCanvasCoordinate(tsumo.child.coord));
 	}
 
 	// static method

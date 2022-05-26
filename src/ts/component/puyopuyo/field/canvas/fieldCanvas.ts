@@ -3,12 +3,12 @@ import { Coordinate } from "../../../../math/coordinate";
 import { GridCellShape } from "../../../canvasparts/gridCellShape";
 import { PuyoShape } from "../../../canvasparts/puyoShape";
 import { TimelineQueue } from "../../../../timeline/timelineQueue";
+import { MathUtil } from "../../../../math/mathUtil";
+import { TsumoInterface } from "../../tsumo/logic/tsumoInterface";
 
-import $ from "jquery";
 import { Container, EventDispatcher, Shadow, Shape, Stage, Text } from "@createjs/easeljs";
 import { Ticker, Timeline, Tween } from "@createjs/tweenjs";
-import { TsumoInterface } from "../../tsumo/logic/tsumoInterface";
-import { MathUtil } from "../../../../math/mathUtil";
+import $ from "jquery";
 
 /**
  * Field (UI)
@@ -212,22 +212,21 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ツモをフィールドに落とす。
-	 * @param {TsumoInterface} axis 軸ぷよ
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ
 	 * @param {Coordinate} toAxisCoord 軸ぷよが落ちる先の座標
 	 * @param {Coordinate} toChildCoord 子ぷよが落ちる先の座標
 	 */
-	public dropTsumo(axis: TsumoInterface, child: TsumoInterface, toAxisCoord: Coordinate, toChildCoord: Coordinate): void {
+	public dropTsumo(tsumo: TsumoInterface, toAxisCoord: Coordinate, toChildCoord: Coordinate): void {
 		const mode = TimelineQueue.instance.mode;
 		const timeline = new Timeline({paused: true});
 
 		const baseY = 14.5;
-		const fromAxisCoord = new Coordinate(axis.coord.x, axis.coord.y + baseY);
-		const fromChildCoord = new Coordinate(child.coord.x, child.coord.y + baseY);
+		const fromAxisCoord = new Coordinate(tsumo.axis.coord.x, tsumo.axis.coord.y + baseY);
+		const fromChildCoord = new Coordinate(tsumo.child.coord.x, tsumo.child.coord.y + baseY);
 
 		if (toAxisCoord.y < PuyoConst.Field.Y_SIZE) {
 			const removePuyo = this.getPuyo(toAxisCoord);
-			const newPuyo = FieldCanvas.createPuyoShape(fromAxisCoord, axis.color);
+			const newPuyo = FieldCanvas.createPuyoShape(fromAxisCoord, tsumo.axis.color);
 			this._container.addChild(newPuyo);
 			this.setPuyo(toAxisCoord, newPuyo);
 
@@ -241,7 +240,7 @@ export class FieldCanvas extends EventDispatcher {
 
 		if (toChildCoord.y < PuyoConst.Field.Y_SIZE) {
 			const removePuyo = this.getPuyo(toChildCoord);
-			const newPuyo = FieldCanvas.createPuyoShape(fromChildCoord, child.color);
+			const newPuyo = FieldCanvas.createPuyoShape(fromChildCoord, tsumo.child.color);
 			this._container.addChild(newPuyo);
 			this.setPuyo(toChildCoord, newPuyo);
 
@@ -277,18 +276,17 @@ export class FieldCanvas extends EventDispatcher {
 
 	/**
 	 * ツモを落とすガイドを表示する。
-	 * @param {TsumoInterface} axis
-	 * @param {TsumoInterface} child
+	 * @param {TsumoInterface} tsumo ツモ
 	 * @param {Coordinate} toAxisCoord 軸ぷよが落ちる先の座標
 	 * @param {Coordinate} toChildCoord 子ぷよが落ちる先の座標
 	 */
-	public setGuide(axis: TsumoInterface, child: TsumoInterface, toAxisCoord: Coordinate, toChildCoord: Coordinate): void {
+	public setGuide(tsumo: TsumoInterface, toAxisCoord: Coordinate, toChildCoord: Coordinate): void {
 		if (toAxisCoord.y < PuyoConst.Field.Y_SIZE) {
-			this._guideAxis.changeColorAndCoord(axis.color, FieldCanvas.getCanvasCoordinate(toAxisCoord).add(FieldCanvas.PUYO_SIZE / 4));
+			this._guideAxis.changeColorAndCoord(tsumo.axis.color, FieldCanvas.getCanvasCoordinate(toAxisCoord).add(FieldCanvas.PUYO_SIZE / 4));
 			this._guideAxis.alpha = this._guideAxis.alpha * 0.5;
 		}
 		if (toChildCoord.y < PuyoConst.Field.Y_SIZE) {
-			this._guideChild.changeColorAndCoord(child.color, FieldCanvas.getCanvasCoordinate(toChildCoord).add(FieldCanvas.PUYO_SIZE / 4));
+			this._guideChild.changeColorAndCoord(tsumo.child.color, FieldCanvas.getCanvasCoordinate(toChildCoord).add(FieldCanvas.PUYO_SIZE / 4));
 			this._guideChild.alpha = this._guideChild.alpha * 0.5;
 		}
 	}

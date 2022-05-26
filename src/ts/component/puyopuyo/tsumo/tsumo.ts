@@ -1,6 +1,6 @@
 import { TsumoCanvas } from "./canvas/tsumoCanvas";
-import { TsumoInterface } from "./logic/tsumoInterface";
 import { TsumoLogic } from "./logic/tsumoLogic";
+import { TsumoInterface } from "./logic/tsumoInterface";
 
 /**
  * Tsumo
@@ -37,18 +37,18 @@ export class Tsumo {
 
 	/**
 	 * ツモの状態を取得する。
-	 * @returns {{axis: TsumoInterface, child: TsumoInterface}} ツモ
+	 * @returns {TsumoInterface} ツモ
 	 */
-	public getTsumo(): {axis: TsumoInterface, child: TsumoInterface} {
+	public getTsumo(): TsumoInterface {
 		return this._logic.getTsumo();
 	}
 
 	/**
 	 * ツモをフィールドに落とす。
 	 * フィールドに渡す用のツモの情報を返す
-	 * @returns {{axis: TsumoInterface, child: TsumoInterface}} ツモ
+	 * @returns {TsumoInterface} ツモ
 	 */
-	public drop(): {axis: TsumoInterface, child: TsumoInterface} {
+	public drop(): TsumoInterface {
 		return this._logic.drop();
 	}
 

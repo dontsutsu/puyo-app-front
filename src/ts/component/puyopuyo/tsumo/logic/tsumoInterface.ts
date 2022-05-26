@@ -1,7 +1,6 @@
-import { Coordinate } from "../../../../math/coordinate";
+import { TsumoPuyoInterface } from "./tsumoPuyoInterface";
 
 export interface TsumoInterface {
-	// properties
-	color: string;
-	coord: Coordinate;
+	axis: TsumoPuyoInterface;
+	child: TsumoPuyoInterface;
 }

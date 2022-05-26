@@ -49,21 +49,19 @@ export class Field extends EventDispatcher {
 	/**
 	 * ツモをフィールドに落とせるかどうかを返す。
 	 * ツモを落とす先が12以下なら落とせる。
-	 * @param {TsumoInterface} axis 軸ぷよ 
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ 
 	 * @returns {boolean} true：落とせる、false：落とせない
 	 */
-	public canDrop(axis: TsumoInterface, child: TsumoInterface): boolean {
-		return this._logic.canDrop(axis, child);
+	public canDrop(tsumo: TsumoInterface): boolean {
+		return this._logic.canDrop(tsumo);
 	}
 
 	/**
 	 * ツモをフィールドに落とす。
-	 * @param {TsumoInterface} axis 軸ぷよ 
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ
 	 */
-	public dropTsumo(axis: TsumoInterface, child: TsumoInterface): void {
-		this._logic.dropTsumo(axis, child);
+	public dropTsumo(tsumo: TsumoInterface): void {
+		this._logic.dropTsumo(tsumo);
 	}
 
 	/**
@@ -106,8 +104,8 @@ export class Field extends EventDispatcher {
 		this._logic.setScore(score);
 	}
 
-	public setGuide(axis: TsumoInterface, child: TsumoInterface): void {
-		this._logic.setGuide(axis, child);
+	public setGuide(tsumo: TsumoInterface): void {
+		this._logic.setGuide(tsumo);
 	}
 
 	public removeGuide(): void {

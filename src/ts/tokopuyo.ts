@@ -72,7 +72,7 @@ export class Tokopuyo {
 		
 		// ツモを落とせるかチェック
 		const currentTsumo = this._tsumo.getTsumo();
-		if (!this._field.canDrop(currentTsumo.axis, currentTsumo.child)) return;
+		if (!this._field.canDrop(currentTsumo)) return;
 
 		// 履歴に登録
 		const field = this._field.getFieldString();
@@ -81,7 +81,7 @@ export class Tokopuyo {
 
 		// フィールドにツモを落とす
 		const dropTsumo = this._tsumo.drop();
-		this._field.dropTsumo(dropTsumo.axis, dropTsumo.child);
+		this._field.dropTsumo(dropTsumo);
 
 		const color = this._next.getNextColor();
 		this._tsumo.set(color.axis, color.child);
@@ -120,6 +120,6 @@ export class Tokopuyo {
 
 	private setGuide(): void {
 		const tsumo = this._tsumo.getTsumo();
-		this._field.setGuide(tsumo.axis, tsumo.child);
+		this._field.setGuide(tsumo);
 	}
 }

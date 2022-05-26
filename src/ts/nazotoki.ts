@@ -6,12 +6,13 @@ import { NazoTsumo } from "./component/common/nazoTsumo/nazoTsumo";
 import { Coordinate } from "./math/coordinate";
 import { NazoTsumoInterface } from "./component/common/nazoTsumo/nazoTsumoInterface";
 import { TimelineQueue } from "./timeline/timelineQueue";
-
-import { Ticker } from "@createjs/tweenjs";
-import $ from "jquery";
+import { TsumoPuyoInterface } from "./component/puyopuyo/tsumo/logic/tsumoPuyoInterface";
 import { PuyoConst } from "./util/const";
 import { EnumPosition } from "./component/puyopuyo/tsumo/logic/enumPosition";
 import { UIUTil } from "./ui/uiUtil";
+
+import { Ticker } from "@createjs/tweenjs";
+import $ from "jquery";
 
 // entry point
 $(() => { new Nazotoki(); });
@@ -155,6 +156,11 @@ export class Nazotoki {
 		});
 	}
 
+	private solveNazopuyo(): TsumoPuyoInterface[] {
+
+		return [];	// TODO
+	}
+
 	/**
 	 * なぞぷよの答えを再生する。
 	 */
@@ -197,7 +203,7 @@ export class Nazotoki {
 
 			// 落とす
 			const dropTsumo = this._tsumo.drop();
-			this._field.dropTsumo(dropTsumo.axis, dropTsumo.child);
+			this._field.dropTsumo(dropTsumo);
 			this._field.landingPause();	// 設置時の一時停止処理
 			const color = this._next.getNextColor();
 			this._tsumo.set(color.axis, color.child);

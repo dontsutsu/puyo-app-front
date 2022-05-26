@@ -1,10 +1,10 @@
 import { PuyoConst } from "../../../../util/const";
 import { Coordinate } from "../../../../math/coordinate";
-import { TsumoInterface } from "../../tsumo/logic/tsumoInterface";
 import { FieldCanvas } from "../canvas/fieldCanvas";
 import { Connect } from "./connect";
 import { FieldPuyo } from "./fieldPuyo";
 import { ChainInfoInterface } from "./chainInfoInterface";
+import { TsumoInterface } from "../../tsumo/logic/tsumoInterface";
 
 /**
  * Field (Logic)
@@ -108,28 +108,26 @@ export class FieldLogic {
 	/**
 	 * ツモをフィールドに落とせるかどうかを返す。
 	 * ツモを落とす先が12以下なら落とせる。
-	 * @param {TsumoInterface} axis 軸ぷよ 
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ
 	 * @returns {boolean} true：落とせる、false：落とせない
 	 */
-	public canDrop(axis: TsumoInterface, child: TsumoInterface): boolean {
-		return this.getHeight(axis.coord.x) < PuyoConst.Field.Y_SIZE - 1 
-			&& this.getHeight(child.coord.x) < PuyoConst.Field.Y_SIZE - 1;
+	public canDrop(tsumo: TsumoInterface): boolean {
+		return this.getHeight(tsumo.axis.coord.x) < PuyoConst.Field.Y_SIZE - 1 
+			&& this.getHeight(tsumo.child.coord.x) < PuyoConst.Field.Y_SIZE - 1;
 	}
 
 	/**
 	 * ツモをフィールドに落とす。
-	 * @param {TsumoInterface} axis 軸ぷよ
-	 * @param {TsumoInterface} child 子ぷよ
+	 * @param {TsumoInterface} tsumo ツモ
 	 */
-	public dropTsumo(axis: TsumoInterface, child: TsumoInterface): void {
-		const tsumoToCoord = this.getTsumoToCoord(axis, child);
+	public dropTsumo(tsumo: TsumoInterface): void {
+		const tsumoToCoord = this.getTsumoToCoord(tsumo);
 		
-		if (tsumoToCoord.axis.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.axis, new FieldPuyo(axis.color));
-		if (tsumoToCoord.child.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.child, new FieldPuyo(child.color));
+		if (tsumoToCoord.axis.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.axis, new FieldPuyo(tsumo.axis.color));
+		if (tsumoToCoord.child.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.child, new FieldPuyo(tsumo.child.color));
 		
 		// view更新
-		this._canvas.dropTsumo(axis, child, tsumoToCoord.axis, tsumoToCoord.child);
+		this._canvas.dropTsumo(tsumo, tsumoToCoord.axis, tsumoToCoord.child);
 
 		// 連鎖処理
 		this.start();
@@ -150,24 +148,24 @@ export class FieldLogic {
 		this._canvas.updateScore(score);
 	}
 
-	public setGuide(axis: TsumoInterface, child: TsumoInterface): void {
-		const tsumoToCoord = this.getTsumoToCoord(axis, child);
+	public setGuide(tsumo: TsumoInterface): void {
+		const tsumoToCoord = this.getTsumoToCoord(tsumo);
 
 		// view更新
-		this._canvas.setGuide(axis, child, tsumoToCoord.axis, tsumoToCoord.child);
+		this._canvas.setGuide(tsumo, tsumoToCoord.axis, tsumoToCoord.child);
 	}
 
-	private getTsumoToCoord(axis: TsumoInterface, child: TsumoInterface): {axis: Coordinate, child: Coordinate} {
+	private getTsumoToCoord(tsumo: TsumoInterface): {axis: Coordinate, child: Coordinate} {
 		const heights = this.getHeights();
 		
 		let toAxisCoord;
 		let toChildCoord;
-		if (child.coord.y < axis.coord.y) {
-			toChildCoord = new Coordinate(child.coord.x, ++heights[child.coord.x]);
-			toAxisCoord = new Coordinate(axis.coord.x, ++heights[axis.coord.x]);
+		if (tsumo.child.coord.y < tsumo.axis.coord.y) {
+			toChildCoord = new Coordinate(tsumo.child.coord.x, ++heights[tsumo.child.coord.x]);
+			toAxisCoord = new Coordinate(tsumo.axis.coord.x, ++heights[tsumo.axis.coord.x]);
 		} else {
-			toAxisCoord = new Coordinate(axis.coord.x, ++heights[axis.coord.x]);
-			toChildCoord = new Coordinate(child.coord.x, ++heights[child.coord.x]);
+			toAxisCoord = new Coordinate(tsumo.axis.coord.x, ++heights[tsumo.axis.coord.x]);
+			toChildCoord = new Coordinate(tsumo.child.coord.x, ++heights[tsumo.child.coord.x]);
 		}
 
 		return {axis: toAxisCoord, child: toChildCoord};
