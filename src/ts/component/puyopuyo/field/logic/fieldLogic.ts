@@ -330,15 +330,15 @@ export class FieldLogic {
 		const connectList: number[] = [];
 		for (const connect of connectArray) {
 			const index = (connect.size > 11 ? 11 : connect.size) - 4;
-			connectBonus += PuyoConst.BONUS.CONNECT[index];
+			connectBonus += PuyoConst.Bonus.CONNECT[index];
 			connectList.push(connect.size);
 		}
 		
 		// 色数ボーナス
-		const colorBonus = PuyoConst.BONUS.COLOR[colorArray.length - 1];
+		const colorBonus = PuyoConst.Bonus.COLOR[colorArray.length - 1];
 
 		// 連鎖ボーナス
-		const chainBonus = PuyoConst.BONUS.CHAIN[chain - 1];
+		const chainBonus = PuyoConst.Bonus.CHAIN[chain - 1];
 		
 		// ボーナス合計
 		let bonus = connectBonus + colorBonus + chainBonus;
