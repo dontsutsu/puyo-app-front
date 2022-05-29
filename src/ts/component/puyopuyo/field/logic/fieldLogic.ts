@@ -112,8 +112,8 @@ export class FieldLogic {
 	 * @returns {boolean} true：落とせる、false：落とせない
 	 */
 	public canDrop(tsumo: TsumoInterface): boolean {
-		return this.getHeight(tsumo.axis.coord.x) < PuyoConst.Field.Y_SIZE - 1 
-			&& this.getHeight(tsumo.child.coord.x) < PuyoConst.Field.Y_SIZE - 1;
+		return this.getHeight(tsumo.axisCoord.x) < PuyoConst.Field.Y_SIZE - 1 
+			&& this.getHeight(tsumo.childCoord.x) < PuyoConst.Field.Y_SIZE - 1;
 	}
 
 	/**
@@ -123,8 +123,8 @@ export class FieldLogic {
 	public dropTsumo(tsumo: TsumoInterface): void {
 		const tsumoToCoord = this.getTsumoToCoord(tsumo);
 		
-		if (tsumoToCoord.axis.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.axis, new FieldPuyo(tsumo.axis.color));
-		if (tsumoToCoord.child.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.child, new FieldPuyo(tsumo.child.color));
+		if (tsumoToCoord.axis.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.axis, new FieldPuyo(tsumo.axisColor));
+		if (tsumoToCoord.child.y < PuyoConst.Field.Y_SIZE) this.setFieldPuyo(tsumoToCoord.child, new FieldPuyo(tsumo.childColor));
 		
 		// view更新
 		this._canvas.dropTsumo(tsumo, tsumoToCoord.axis, tsumoToCoord.child);
@@ -160,12 +160,12 @@ export class FieldLogic {
 		
 		let toAxisCoord;
 		let toChildCoord;
-		if (tsumo.child.coord.y < tsumo.axis.coord.y) {
-			toChildCoord = new Coordinate(tsumo.child.coord.x, ++heights[tsumo.child.coord.x]);
-			toAxisCoord = new Coordinate(tsumo.axis.coord.x, ++heights[tsumo.axis.coord.x]);
+		if (tsumo.childCoord.y < tsumo.axisCoord.y) {
+			toChildCoord = new Coordinate(tsumo.childCoord.x, ++heights[tsumo.childCoord.x]);
+			toAxisCoord = new Coordinate(tsumo.axisCoord.x, ++heights[tsumo.axisCoord.x]);
 		} else {
-			toAxisCoord = new Coordinate(tsumo.axis.coord.x, ++heights[tsumo.axis.coord.x]);
-			toChildCoord = new Coordinate(tsumo.child.coord.x, ++heights[tsumo.child.coord.x]);
+			toAxisCoord = new Coordinate(tsumo.axisCoord.x, ++heights[tsumo.axisCoord.x]);
+			toChildCoord = new Coordinate(tsumo.childCoord.x, ++heights[tsumo.childCoord.x]);
 		}
 
 		return {axis: toAxisCoord, child: toChildCoord};

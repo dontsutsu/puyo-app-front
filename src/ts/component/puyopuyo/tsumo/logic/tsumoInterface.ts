@@ -1,6 +1,11 @@
-import { TsumoPuyoInterface } from "./tsumoPuyoInterface";
+import { Coordinate } from "../../../../math/coordinate";
+import { EnumPosition } from "./enumPosition";
 
 export interface TsumoInterface {
-	axis: TsumoPuyoInterface;
-	child: TsumoPuyoInterface;
+	axisColor: string;
+	childColor: string;
+	axisX: number;
+	position: EnumPosition;
+	axisCoord: Coordinate;
+	childCoord: Coordinate;
 }

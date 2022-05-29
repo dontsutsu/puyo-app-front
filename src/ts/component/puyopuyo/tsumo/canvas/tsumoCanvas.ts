@@ -156,13 +156,13 @@ export class TsumoCanvas {
 		const mode = TimelineQueue.instance.mode;
 		const diff = 3;
 
-		const fromAxisCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord.clone().addY(diff));
-		const toAixsCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord);
-		const fromChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.child.coord.clone().addY(diff));
-		const toChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.child.coord);
+		const fromAxisCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axisCoord.clone().addY(diff));
+		const toAixsCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.axisCoord);
+		const fromChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.childCoord.clone().addY(diff));
+		const toChildCanvasCoord = TsumoCanvas.getCanvasCoordinate(tsumo.childCoord);
 
-		this._axis = new PuyoShape(fromAxisCanvasCoord, tsumo.axis.color, TsumoCanvas.PUYO_SIZE);
-		this._child = new PuyoShape(fromChildCanvasCoord, tsumo.child.color, TsumoCanvas.PUYO_SIZE);
+		this._axis = new PuyoShape(fromAxisCanvasCoord, tsumo.axisColor, TsumoCanvas.PUYO_SIZE);
+		this._child = new PuyoShape(fromChildCanvasCoord, tsumo.childColor, TsumoCanvas.PUYO_SIZE);
 		this._container.addChild(this._axis, this._child);
 
 		const axisTween = Tween.get(this._axis)
@@ -183,8 +183,8 @@ export class TsumoCanvas {
 	 * @param {TsumoInterface} tsumo 軸ぷよ
 	 */
 	public change(tsumo: TsumoInterface): void {
-		this._axis.changeColorAndCoord(tsumo.axis.color, TsumoCanvas.getCanvasCoordinate(tsumo.axis.coord));
-		this._child.changeColorAndCoord(tsumo.child.color, TsumoCanvas.getCanvasCoordinate(tsumo.child.coord));
+		this._axis.changeColorAndCoord(tsumo.axisColor, TsumoCanvas.getCanvasCoordinate(tsumo.axisCoord));
+		this._child.changeColorAndCoord(tsumo.childColor, TsumoCanvas.getCanvasCoordinate(tsumo.childCoord));
 	}
 
 	// static method

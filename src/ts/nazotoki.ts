@@ -6,7 +6,6 @@ import { NazoTsumo } from "./component/common/nazoTsumo/nazoTsumo";
 import { Coordinate } from "./math/coordinate";
 import { NazoTsumoInterface } from "./component/common/nazoTsumo/nazoTsumoInterface";
 import { TimelineQueue } from "./timeline/timelineQueue";
-import { TsumoPuyoInterface } from "./component/puyopuyo/tsumo/logic/tsumoPuyoInterface";
 import { PuyoConst } from "./util/const";
 import { EnumPosition } from "./component/puyopuyo/tsumo/logic/enumPosition";
 import { UIUTil } from "./ui/uiUtil";
@@ -154,11 +153,6 @@ export class Nazotoki {
 		.always(() => {
 			UIUTil.hideLoading();
 		});
-	}
-
-	private solveNazopuyo(): TsumoPuyoInterface[] {
-
-		return [];	// TODO
 	}
 
 	/**

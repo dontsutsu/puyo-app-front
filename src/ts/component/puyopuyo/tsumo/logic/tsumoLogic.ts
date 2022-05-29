@@ -2,7 +2,6 @@ import { PuyoConst } from "../../../../util/const";
 import { Coordinate } from "../../../../math/coordinate";
 import { TsumoCanvas } from "../canvas/tsumoCanvas";
 import { EnumPosition } from "./enumPosition";
-import { TsumoPuyoInterface } from "./tsumoPuyoInterface";
 import { TsumoInterface } from "./tsumoInterface";
 
 /**
@@ -35,12 +34,7 @@ export class TsumoLogic {
 		this._axisX = PuyoConst.Tsumo.INI_X;
 		this._position = PuyoConst.Tsumo.INI_POSITION;
 
-		const tsumo: TsumoInterface = {
-			axis: { color: this._axisColor, coord: this.axisCoord },
-			child: { color: this._childColor, coord: this.childCoord }
-		}
-
-		this._canvas.set(tsumo, init);
+		this._canvas.set(this.tsumoInterface, init);
 	}
 
 	/**
@@ -54,12 +48,7 @@ export class TsumoLogic {
 		this._axisX = PuyoConst.Tsumo.INI_X;
 		this._position = PuyoConst.Tsumo.INI_POSITION;
 
-		const tsumo: TsumoInterface =  {
-			axis: { color: this._axisColor, coord: this.axisCoord },
-			child: { color: this._childColor, coord: this.childCoord }
-		};
-
-		this._canvas.change(tsumo);
+		this._canvas.change(this.tsumoInterface);
 	}
 
 	/**
@@ -109,7 +98,7 @@ export class TsumoLogic {
 	 * @returns {TsumoInterface} ツモ
 	 */
 	public getTsumo(): TsumoInterface {
-		return { axis: this.axis, child: this.child };
+		return this.tsumoInterface;
 	}
 
 	/**
@@ -121,7 +110,7 @@ export class TsumoLogic {
 		// view更新
 		this._canvas.drop(this.axisCoord, this.childCoord);
 
-		return { axis: this.axis, child: this.child };
+		return this.tsumoInterface;
 	}
 
 	// accessor
@@ -141,11 +130,14 @@ export class TsumoLogic {
 		return this.axisCoord.addCoord(this._position.childRelativeCoord);
 	}
 
-	get axis(): TsumoPuyoInterface {
-		return { color: this.axisColor, coord: this.axisCoord };
-	}
-
-	get child(): TsumoPuyoInterface {
-		return { color: this.childColor, coord: this.childCoord };
+	get tsumoInterface(): TsumoInterface {
+		return {
+			axisColor: this._axisColor
+			, childColor: this._childColor
+			, axisX: this._axisX
+			, position: this._position
+			, axisCoord: this.axisCoord
+			, childCoord: this.childCoord
+		};
 	}
 }

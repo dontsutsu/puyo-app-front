@@ -221,12 +221,12 @@ export class FieldCanvas extends EventDispatcher {
 		const timeline = new Timeline({paused: true});
 
 		const baseY = 14.5;
-		const fromAxisCoord = new Coordinate(tsumo.axis.coord.x, tsumo.axis.coord.y + baseY);
-		const fromChildCoord = new Coordinate(tsumo.child.coord.x, tsumo.child.coord.y + baseY);
+		const fromAxisCoord = new Coordinate(tsumo.axisCoord.x, tsumo.axisCoord.y + baseY);
+		const fromChildCoord = new Coordinate(tsumo.childCoord.x, tsumo.childCoord.y + baseY);
 
 		if (toAxisCoord.y < PuyoConst.Field.Y_SIZE) {
 			const removePuyo = this.getPuyo(toAxisCoord);
-			const newPuyo = FieldCanvas.createPuyoShape(fromAxisCoord, tsumo.axis.color);
+			const newPuyo = FieldCanvas.createPuyoShape(fromAxisCoord, tsumo.axisColor);
 			this._container.addChild(newPuyo);
 			this.setPuyo(toAxisCoord, newPuyo);
 
@@ -240,7 +240,7 @@ export class FieldCanvas extends EventDispatcher {
 
 		if (toChildCoord.y < PuyoConst.Field.Y_SIZE) {
 			const removePuyo = this.getPuyo(toChildCoord);
-			const newPuyo = FieldCanvas.createPuyoShape(fromChildCoord, tsumo.child.color);
+			const newPuyo = FieldCanvas.createPuyoShape(fromChildCoord, tsumo.childColor);
 			this._container.addChild(newPuyo);
 			this.setPuyo(toChildCoord, newPuyo);
 
@@ -282,11 +282,11 @@ export class FieldCanvas extends EventDispatcher {
 	 */
 	public setGuide(tsumo: TsumoInterface, toAxisCoord: Coordinate, toChildCoord: Coordinate): void {
 		if (toAxisCoord.y < PuyoConst.Field.Y_SIZE) {
-			this._guideAxis.changeColorAndCoord(tsumo.axis.color, FieldCanvas.getCanvasCoordinate(toAxisCoord).add(FieldCanvas.PUYO_SIZE / 4));
+			this._guideAxis.changeColorAndCoord(tsumo.axisColor, FieldCanvas.getCanvasCoordinate(toAxisCoord).add(FieldCanvas.PUYO_SIZE / 4));
 			this._guideAxis.alpha = this._guideAxis.alpha * 0.5;
 		}
 		if (toChildCoord.y < PuyoConst.Field.Y_SIZE) {
-			this._guideChild.changeColorAndCoord(tsumo.child.color, FieldCanvas.getCanvasCoordinate(toChildCoord).add(FieldCanvas.PUYO_SIZE / 4));
+			this._guideChild.changeColorAndCoord(tsumo.childColor, FieldCanvas.getCanvasCoordinate(toChildCoord).add(FieldCanvas.PUYO_SIZE / 4));
 			this._guideChild.alpha = this._guideChild.alpha * 0.5;
 		}
 	}
