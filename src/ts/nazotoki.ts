@@ -116,10 +116,10 @@ export class Nazotoki {
 		UIUTil.showLoading("なぞぷよの答えを検索中です...");
 
 		const data = {
-			field: this._field.getFieldString(),
-			nazoTsumo: this._nazoTsumo.getString(),
-			type: this._$qType.val() as string,
-			require: this._$qRequire.val() as string
+			fieldStr: this._field.getFieldString(),
+			tsumoStr: this._nazoTsumo.getString(),
+			qType: this._$qType.val() as string,
+			qRequire: this._$qRequire.val() as string
 		};
 
 		$.ajax({
