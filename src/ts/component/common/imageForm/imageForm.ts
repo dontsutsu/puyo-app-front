@@ -38,7 +38,7 @@ export class ImageForm extends EventDispatcher {
 		this._$wrapper.hide();
 
 		// event
-		this._$imageFile.on("change", this.changeImage.bind(this));
+		this._$imageFile.on("change", this.changeImageFile.bind(this));
 		this._$trimmode.on("change", () => { this._canvas.changeMode(this._$trimmode.filter(":checked").val() as string); });
 		this._$convertImage.on("click", this.convertImage.bind(this));
 		this._$close.on("click", this.close.bind(this));
@@ -48,6 +48,7 @@ export class ImageForm extends EventDispatcher {
 	 * フォームを開く。
 	 */
 	public open(): void {
+		$(document).on("paste", this.paste.bind(this));
 		this._$wrapper.fadeIn(300);
 	}
 
@@ -55,6 +56,7 @@ export class ImageForm extends EventDispatcher {
 	 * フォームを閉じる。
 	 */
 	private close(): void {
+		$(document).off("paste");
 		this._$wrapper.fadeOut(300);
 	}
 
@@ -105,10 +107,11 @@ export class ImageForm extends EventDispatcher {
 	}
 
 	/**
-	 * 画像を変更する。
+	 * 画像ファイルの変更イベント。
+	 * アップロードしたファイルに変更する。
 	 * @param {JQuery.ChangeEvent} e changeイベント
 	 */
-	private changeImage(e: JQuery.ChangeEvent): void {
+	private changeImageFile(e: JQuery.ChangeEvent): void {
 		const t = e.currentTarget as HTMLInputElement;
 
 		if (t.files === null) return;
@@ -120,7 +123,39 @@ export class ImageForm extends EventDispatcher {
 			alert("画像ファイルを選択してください。");
 			return;
 		}
+		this.changeImage(file);
+	}
 
+	/**
+	 * 画像を貼り付けイベント。
+	 * クリップボードの画像を貼り付ける。
+	 * @param {JQuery.TriggeredEvent} e イベント
+	 */
+	private paste(e: JQuery.TriggeredEvent): void {
+		const ce = e.originalEvent as ClipboardEvent;
+		if (!ce.clipboardData) return;
+		if (!ce.clipboardData.items) return;
+
+		const items = ce.clipboardData.items;
+		let imageItem: DataTransferItem | null = null;
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].type.indexOf("image/") != -1) {
+				imageItem = items[i];
+				break;
+			}
+		}
+		if (imageItem === null) return;
+
+		const file = imageItem.getAsFile();
+		if (file === null) return;
+		this.changeImage(file);
+	}
+
+	/**
+	 * 画像を変更する。
+	 * @param {File} file 
+	 */
+	private changeImage(file: File): void {
 		const reader = new FileReader();
 		const img = new Image();
 		reader.onload = (e) => {
