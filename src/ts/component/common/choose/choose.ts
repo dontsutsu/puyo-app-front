@@ -27,4 +27,9 @@ export class Choose {
 	get choiseColor(): string {
 		return this._choiseColor;
 	}
+
+	set choiseColor(choiseColor: string) {
+		this._choiseColor = choiseColor;
+		this._canvas.changeChoiseColor(this._choiseColor);
+	}
 }

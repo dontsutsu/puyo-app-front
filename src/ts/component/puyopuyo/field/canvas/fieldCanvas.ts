@@ -15,7 +15,7 @@ import $ from "jquery";
  */
 export class FieldCanvas extends EventDispatcher {
 	// constant
-	private static readonly PUYO_SIZE = 25;
+	private static readonly PUYO_SIZE = 30;
 	public static readonly F_O_PAD = FieldCanvas.PUYO_SIZE / 6;
 	public static readonly F_I_PAD = FieldCanvas.F_O_PAD * 3;
 	private static readonly F_SKEW_DEG = 5;

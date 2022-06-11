@@ -15,7 +15,7 @@ import $ from "jquery";
  */
 export class TsumoCanvas {
 	// constant
-	private static readonly PUYO_SIZE = 25;
+	private static readonly PUYO_SIZE = 30;
 	private static readonly Y_SIZE = 3;
 	private static readonly DROP_V = 50;
 	private static readonly MOVE_V = 80;

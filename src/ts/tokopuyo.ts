@@ -14,8 +14,8 @@ export class Tokopuyo {
 	private _field: Field;
 	private _tsumo: Tsumo;
 	private _next: Next;
-	private _$tlmode: JQuery<HTMLElement>;
 	private _undoStack: {field: string, score: number}[];
+	private _timeline: TimelineQueue;
 
 	/**
 	 * constructor
@@ -26,14 +26,14 @@ export class Tokopuyo {
 		this._field = new Field("field", false);
 		this._tsumo = new Tsumo("tsumo");
 		this._next = new Next("next");
-		this._$tlmode = $("input:radio[name='tlmode']");
 		this._undoStack = [];
+		this._timeline = TimelineQueue.instance;
 
 		this._next.init();
 		const color = this._next.getNextColor();
 		this._tsumo.init(color.axis, color.child);
 
-		TimelineQueue.instance.play(undefined, () => { this.setGuide(); });
+		this._timeline.play(undefined, () => { this.setGuide(); });
 
 		// event
 		$("html").on("keydown", (e) => {
@@ -46,28 +46,24 @@ export class Tokopuyo {
 				case "x" : this.keydownX(); break;
 			}
 		});
-
-		this._$tlmode.on("change", () => {
-			TimelineQueue.instance.mode = Number(this._$tlmode.filter(":checked").val() as string);
-		});
 	}
 
 	private keydownRight(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 		if (this._field.isDead()) return;
 		this._tsumo.move(1);
-		TimelineQueue.instance.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
+		this._timeline.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
 	}
 
 	private keydownLeft(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 		if (this._field.isDead()) return;
 		this._tsumo.move(-1);
-		TimelineQueue.instance.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
+		this._timeline.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
 	}
 
 	private keydownDown(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 		if (this._field.isDead()) return;
 		
 		// ツモを落とせるかチェック
@@ -86,11 +82,11 @@ export class Tokopuyo {
 		const color = this._next.getNextColor();
 		this._tsumo.set(color.axis, color.child);
 
-		TimelineQueue.instance.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
+		this._timeline.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
 	}
 
 	private keydownUp(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 
 		const undo = this._undoStack.pop();
 		if (undo === undefined) return;
@@ -105,17 +101,17 @@ export class Tokopuyo {
 	}
 
 	private keydownZ(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 		if (this._field.isDead()) return;
 		this._tsumo.rotate(false);
-		TimelineQueue.instance.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
+		this._timeline.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
 	}
 
 	private keydownX(): void {
-		if (TimelineQueue.instance.isPlaying) return;
+		if (this._timeline.isPlaying) return;
 		if (this._field.isDead()) return;
 		this._tsumo.rotate(true);
-		TimelineQueue.instance.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
+		this._timeline.play(() => { this._field.removeGuide(); }, () => { this.setGuide(); });
 	}
 
 	private setGuide(): void {

@@ -39,3 +39,171 @@
 		text-align: center;
 	}
 }
+
+label.button, a.button {
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #D0D0D0;
+	border: solid 1px #808080;
+	border-radius: 5px;
+	padding: 5px;
+	margin: 0 10px 0 0;
+	display: inline-block;
+	text-align: center;
+	user-select: none;
+
+	&:hover {
+		background-color: #A0A0A0;
+		cursor: pointer;
+	}
+
+	&:active {
+		box-shadow: 0px 0px 3px 3px #808080 inset;
+	}
+
+	&.button-m-size {
+		width: 100px;
+	}
+
+	&.button-l-size {
+		width: 222px;
+	}
+
+	img {
+		width: 16px;
+		height: 16px;
+		margin: 0 10px 0 0;
+		vertical-align: middle;
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+}
+
+.wrapper {
+	padding: 10px;
+	display: flex;
+	color: #4B4B4B;
+	
+	.container {
+		margin: 0 20px 0 0;
+
+		div {
+			margin: 0 0 10px 0;
+
+			&.font-0 {
+				font-size: 0;
+			}
+		}
+	}
+}
+
+canvas {
+	display: block;
+}
+
+#tsumo {
+	margin: 0 0 10px 0;
+}
+
+.radio {
+	@keyframes radio-checked {
+		0% {
+			transform: scale(0.1);
+		}
+		65% {
+			transform: scale(1.1);
+		}
+		100% {
+			transform: scale(1.0);
+		}
+	}
+
+	display: block;
+	font-size: 14px;
+
+	.outside {
+		display: inline-block;
+		border: 2px solid #CCCCCC;
+		border-radius: 50%;
+		background-color: #F0F0F0;
+		width: 20px;
+		height: 20px;
+
+		.inside {
+			display: block;
+			position: relative;
+			border: 2px solid #4B4B4B;
+			border-radius: 50%;
+			background-color: #4B4B4B;
+			width: 12px;
+			height: 12px;
+			top: 12px;
+			left: 12px;
+			margin: -10px 0 0 -10px;
+			transform: scale(0);
+		}
+	}
+
+	// ラジオボタン非表示
+	input[type="radio"] {
+		display: none;
+	}
+
+	input[type="radio"]:checked {
+		+ .outside .inside {
+			animation: radio-checked 0.1s linear;
+			transform: scale(1);
+		}
+	}
+
+	label {
+		vertical-align: super;
+		font-weight: bold;
+		margin: 0 0 0 10px;
+		user-select: none;
+	}
+}
+
+.range {
+	img {
+		width: 24px;
+		height: 24px;
+		vertical-align: middle;
+	}
+
+	input[type="range"] {
+		margin: 0 10px;
+		vertical-align: middle;
+	}
+}
+
+hr {
+	margin: 15px 0;
+	border-top: 2px solid #D0D0D0;
+	border-bottom: 0 solid #FFFFFF;
+}
+
+.keyboard-manual {
+	font-size: 13px;
+	
+	thead {
+		th {
+			background-color: #666666;
+			color: #FFFFFF;
+			padding: 0.5em;
+		}
+	}
+
+	tbody {
+		th, td {
+			border: 1px solid #A0A0A0;
+			padding: 0.2em 0.5em;
+		}
+
+		th {
+			background-color: #D0D0D0;
+		}
+	}
+}

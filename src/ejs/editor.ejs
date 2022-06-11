@@ -6,18 +6,83 @@
 	<link rel="stylesheet" href="static/css/main.css" />
 </head>
 <body>
-	<canvas id="field" class="field"></canvas>
-	<canvas id="choose"></canvas>
+	<div class="wrapper">
+		<div class="container">
+			<canvas id="field" class="field"></canvas>
+		</div>
 
-	<br>
+		<div class="container operation-container">
+			<div>
+				<canvas id="choose"></canvas>
+			</div>
+			<div class="font-0">
+				<a id="undo" class="button button-m-size"><img src="static/images/icon/undo.svg"><span>元に戻す</span></a>
+				<a id="redo" class="button button-m-size"><img src="static/images/icon/redo.svg"><span>やり直す</span></a>
+			</div>
+			<div>
+				<a id="openImageForm" class="button button-l-size"><img src="static/images/icon/picture.svg"><span>画像読み込み</span></a>
+			</div>
+			<hr>
+			<div>
+				<a id="start" class="button button-m-size"><img src="static/images/icon/start.svg"><span>連鎖実行</span></a>
+			</div>
+			<%- include("partials/_timelineSetting") %>
+		</div>
 
-	<button id="start">start</button>
-	<button id="undo">undo</button>
-	<button id="redo">redo</button>
-	<input type="radio" name="tlmode" id="step" value="0"><label for="step">STEP</label>
-	<input type="radio" name="tlmode" id="animation" value="1" checked><label for="animation">ANIMATION</label>
-	<button id="openImageForm">imageForm</button>
-
+		<div class="container">
+			<div class="keyboard-manual">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">キーボード</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>G / 1</th>
+							<td>みどりを選択</td>
+						</tr>
+						<tr>
+							<th>R / 2</th>
+							<td>あかを選択</td>
+						</tr>
+						<tr>
+							<th>B / 3</th>
+							<td>あおを選択</td>
+						</tr>
+						<tr>
+							<th>Y / 4</th>
+							<td>きいろを選択</td>
+						</tr>
+						<tr>
+							<th>P / 5</th>
+							<td>むらさきを選択</td>
+						</tr>
+						<tr>
+							<th>J / 9</th>
+							<td>おじゃまを選択</td>
+						</tr>
+						<tr>
+							<th>D / 0</th>
+							<td>けすを選択</td>
+						</tr>
+						<tr>
+							<th>Ctrl + Z</th>
+							<td>元に戻す</td>
+						</tr>
+						<tr>
+							<th>Ctrl + Y</th>
+							<td>やり直す</td>
+						</tr>
+						<tr>
+							<th>SPACE</th>
+							<td>連鎖実行</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 	<%- include("partials/_imageForm") %>
 	<%- include("partials/_loading") %>
 

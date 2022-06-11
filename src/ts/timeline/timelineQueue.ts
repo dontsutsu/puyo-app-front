@@ -1,4 +1,5 @@
 import { Timeline } from "@createjs/tweenjs";
+import $ from "jquery";
 
 export class TimelineQueue {
 	// singleton instance
@@ -9,6 +10,9 @@ export class TimelineQueue {
 	private _isPlaying: boolean;
 	/** 0：ステップ、1：アニメーション */
 	private _mode: number;
+	private _speed: number;
+	private _$mode: JQuery<HTMLElement>;
+	private _$speed: JQuery<HTMLElement>;
 
 	/**
 	 * constructor
@@ -17,6 +21,18 @@ export class TimelineQueue {
 		this._queue = [];
 		this._isPlaying = false;
 		this._mode = 1;
+		this._speed = 3;
+		this._$mode = $("input:radio[name='mode']");
+		this._$speed = $("#speed");
+
+		this._$mode.on("change", () => {
+			this._mode = Number(this._$mode.filter(":checked").val() as string);
+		});
+
+		this._$speed.on("change", (e) => {
+			const val = (e.target as HTMLInputElement).value;
+			this._speed = Number(val);
+		});
 	}
 
 	// static method
@@ -50,6 +66,14 @@ export class TimelineQueue {
 		this._isPlaying = true;
 
 		for (let i = 0; i < this._queue.length; i++) {
+			const timeline = this._queue[i];
+
+			const n = this._speed - 3;
+			const abs = Math.abs(n);
+			let scale = (2 + abs) / 2;
+			if (n < 0) scale = 1 / scale;
+			timeline.timeScale = scale;
+
 			let afterComplete;
 			if (i < this._queue.length - 1) {
 				afterComplete = () => this._queue[i + 1].gotoAndPlay(0);
@@ -61,7 +85,7 @@ export class TimelineQueue {
 					if (after !== undefined) after();
 				}
 			}
-			this._queue[i].addEventListener("complete", afterComplete);
+			timeline.addEventListener("complete", afterComplete);
 		}
 
 		// callback
@@ -73,10 +97,6 @@ export class TimelineQueue {
 	// accessor
 	get mode(): number {
 		return this._mode;
-	}
-
-	set mode(mode: number) {
-		this._mode = mode;
 	}
 
 	get isPlaying(): boolean {

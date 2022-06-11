@@ -2,7 +2,6 @@ import { Choose } from "./component/common/choose/choose";
 import { TimelineQueue } from "./timeline/timelineQueue";
 import { Field } from "./component/puyopuyo/field/field";
 import { Coordinate } from "./math/coordinate";
-
 import { Ticker } from "@createjs/tweenjs";
 import $ from "jquery";
 import { ImageForm } from "./component/common/imageForm/imageForm";
@@ -14,10 +13,10 @@ export class Editor {
 	// properties
 	private _field: Field;
 	private _choose: Choose;
-	private _$tlmode: JQuery<HTMLElement>;
 	private _undoStack: string[];
 	private _redoStack: string[];
 	private _imageForm: ImageForm;
+	private _timeline: TimelineQueue;
 	
 	/**
 	 * constructor
@@ -27,27 +26,38 @@ export class Editor {
 
 		this._field = new Field("field", true);
 		this._choose = new Choose();
-		this._$tlmode = $("input:radio[name='tlmode']");
 		this._imageForm = new ImageForm();
 		this._undoStack = [];
 		this._redoStack = [];
+		this._timeline = TimelineQueue.instance;
 
 		// event
-		this._field.addEventListener("mousedown", this.mousedownField.bind(this));
-
-		$("#start").on("click", this.start.bind(this));
-
-		$("#undo").on("click", this.undo.bind(this));
-
-		$("#redo").on("click", this.redo.bind(this));
-
-		$("#openImageForm").on("click", () => { this._imageForm.open() });
-
-		this._imageForm.addEventListener("receive", this.recieveFieldData.bind(this));
-
-		this._$tlmode.on("change", () => {
-			TimelineQueue.instance.mode = Number(this._$tlmode.filter(":checked").val() as string);
+		$("html").on("keydown", (e) => {
+			if (e.ctrlKey) {
+				switch(e.key) {
+					case "z" : this.undo(); break;
+					case "y" : this.redo(); break;
+				}
+			} else {
+				switch(e.key) {
+					case "1" : case "g" : this._choose.choiseColor = "1"; break;
+					case "2" : case "r" : this._choose.choiseColor = "2"; break;
+					case "3" : case "b" : this._choose.choiseColor = "3"; break;
+					case "4" : case "y" : this._choose.choiseColor = "4"; break;
+					case "5" : case "p" : this._choose.choiseColor = "5"; break;
+					case "9" : case "j" : this._choose.choiseColor = "9"; break;
+					case "0" : case "d" : this._choose.choiseColor = "0"; break;
+					case " " : this.start(); break;
+				}
+			}
 		});
+
+		this._field.addEventListener("mousedown", this.mousedownField.bind(this));
+		$("#start").on("click", this.start.bind(this));
+		$("#undo").on("click", this.undo.bind(this));
+		$("#redo").on("click", this.redo.bind(this));
+		$("#openImageForm").on("click", () => { this._imageForm.open() });
+		this._imageForm.addEventListener("receive", this.recieveFieldData.bind(this));
 	}
 
 	// method
@@ -66,7 +76,7 @@ export class Editor {
 			this._field.start();
 		});
 
-		TimelineQueue.instance.play();
+		this._timeline.play();
 	}
 
 	private undo(): void {
@@ -83,7 +93,7 @@ export class Editor {
 			this._undoStack.push(this._field.getFieldString());
 			this._field.setField(redo);
 		}
-		TimelineQueue.instance.play();
+		this._timeline.play();
 	}
 
 	/**

@@ -22,7 +22,7 @@ export class ChooseCanvas extends EventDispatcher {
 	];
 	private static readonly X_SIZE = 5;
 	private static readonly Y_SIZE = 2;
-	private static readonly PUYO_SIZE = 30;
+	private static readonly PUYO_SIZE = 40;
 	private static readonly CELL_ENABLED_COLOR = "#FFFFFF";
 	private static readonly CELL_DISABLED_COLOR = "#666666";
 	private static readonly KESU_PADDING = 2;

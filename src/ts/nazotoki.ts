@@ -26,7 +26,6 @@ export class Nazotoki {
 	private _next: Next;
 	private _choose: Choose;
 	private _nazoTsumo: NazoTsumo;
-	private _$tlmode: JQuery<HTMLElement>;
 	private _$qType: JQuery<HTMLElement>;
 	private _$qRequire: JQuery<HTMLElement>;
 	private _$answer: JQuery<HTMLElement>;
@@ -34,6 +33,7 @@ export class Nazotoki {
 	private _$play: JQuery<HTMLElement>;
 	private _answerList: FindnazoRes[][];
 	private _mode : string;
+	private _timeline: TimelineQueue;
 
 	/**
 	 * constructor
@@ -46,7 +46,6 @@ export class Nazotoki {
 		this._next = new Next("next");
 		this._choose = new Choose();
 		this._nazoTsumo = new NazoTsumo();
-		this._$tlmode = $("input:radio[name='tlmode']");
 		this._$qType = $("#qType");
 		this._$qRequire = $("#qRequire");
 		this._$answer = $("input:radio[name='answer']");
@@ -54,6 +53,7 @@ export class Nazotoki {
 		this._$play = $("#play");
 		this._answerList = [];
 		this._mode = Nazotoki.MODE_EDIT;
+		this._timeline = TimelineQueue.instance;
 
 		// init
 		this.changeMode(Nazotoki.MODE_EDIT);
@@ -62,18 +62,10 @@ export class Nazotoki {
 
 		// event
 		this._field.addEventListener("mousedown", this.mousedownField.bind(this));
-
 		this._nazoTsumo.addEventListener("mousedown", this.mousedownNazoTsumo.bind(this));
-
 		this._$find.on("click", this.find.bind(this));
-
 		this._$play.on("click", this.play.bind(this));
-
 		this._$qType.on("change", this.changeQuestion.bind(this));
-
-		this._$tlmode.on("change", () => {
-			TimelineQueue.instance.mode = Number(this._$tlmode.filter(":checked").val() as string);
-		});
 	}
 
 	/**
@@ -203,7 +195,7 @@ export class Nazotoki {
 			this._tsumo.set(color.axis, color.child);
 		}
 
-		TimelineQueue.instance.play();
+		this._timeline.play();
 	}
 
 	/**
