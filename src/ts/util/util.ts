@@ -1,6 +1,3 @@
-import { Bitmap } from "@createjs/easeljs";
-import { Coordinate } from "../math/coordinate";
-
 /**
  * Utilityクラス
  */

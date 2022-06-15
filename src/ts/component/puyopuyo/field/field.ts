@@ -123,4 +123,8 @@ export class Field extends EventDispatcher {
 	public landingPause(): void {
 		this._canvas.landingPause();
 	}
+
+	public clear(): void {
+		this._logic.clear();
+	}
 }

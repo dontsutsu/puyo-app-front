@@ -34,6 +34,8 @@ export namespace PuyoConst {
 	}
 
 	export const ERASE_CONNECT = 4;
+
+	export const OJAMA_RATE = 70;
 }
 
 export namespace UIConst {

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1589"
+   width="40.125"
+   height="34.402306"
+   viewBox="0 0 40.125 34.402306"
+   sodipodi:docname="yokokupuyo.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   inkscape:export-filename="ojama-crown.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1593" />
+  <sodipodi:namedview
+     id="namedview1591"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="4"
+     inkscape:cx="183.375"
+     inkscape:cy="27.125"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1595" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1595"
+     transform="translate(-548.9375,-64.535194)">
+    <g
+       id="g10323"
+       inkscape:label="ojama-crown">
+      <path
+         id="path10231"
+         style="fill:#ec8d36;fill-opacity:1;stroke:#991f25;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 561.25,72.8125 -11.3125,-6.875 4.0625,32 h 14.5625 0.875 H 584 l 4.0625,-32 -11.3125,6.875 c -2.19114,-2.104891 -6.53504,-6.134106 -7.75,-7.277344 -1.18022,1.086659 -5.39035,5.062021 -7.75,7.277344 z"
+         sodipodi:nodetypes="cccccccccc" />
+      <g
+         id="g10282"
+         inkscape:label="eye-l">
+        <circle
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#991f25;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path10256"
+           cx="561.00085"
+           cy="83.438599"
+           r="6.9194784" />
+        <circle
+           style="opacity:1;fill:#991f25;fill-opacity:1;stroke:#991f25;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path10256-4"
+           cx="561.00085"
+           cy="83.438599"
+           r="3.895261" />
+      </g>
+      <g
+         id="g10282-6"
+         transform="translate(15.909889)"
+         inkscape:label="eye-r">
+        <circle
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#991f25;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path10256-2"
+           cx="561.00085"
+           cy="83.438599"
+           r="6.9194784" />
+        <circle
+           style="opacity:1;fill:#991f25;fill-opacity:1;stroke:#991f25;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path10256-4-9"
+           cx="561.00085"
+           cy="83.438599"
+           r="3.895261" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -5,6 +5,7 @@ import { Coordinate } from "./math/coordinate";
 import { Ticker } from "@createjs/tweenjs";
 import $ from "jquery";
 import { ImageForm } from "./component/common/imageForm/imageForm";
+import { ChainInfoArea } from "./component/common/chainInfoArea/chainInfoArea";
 
 // entry point
 $(() => { new Editor(); });
@@ -17,6 +18,7 @@ export class Editor {
 	private _redoStack: string[];
 	private _imageForm: ImageForm;
 	private _timeline: TimelineQueue;
+	private _chainInfoArea: ChainInfoArea;
 	
 	/**
 	 * constructor
@@ -30,6 +32,7 @@ export class Editor {
 		this._undoStack = [];
 		this._redoStack = [];
 		this._timeline = TimelineQueue.instance;
+		this._chainInfoArea = new ChainInfoArea();
 
 		// event
 		$("html").on("keydown", (e) => {
@@ -56,6 +59,7 @@ export class Editor {
 		$("#start").on("click", this.start.bind(this));
 		$("#undo").on("click", this.undo.bind(this));
 		$("#redo").on("click", this.redo.bind(this));
+		$("#clear").on("click", this.clear.bind(this));
 		$("#openImageForm").on("click", () => { this._imageForm.open() });
 		this._imageForm.addEventListener("receive", this.recieveFieldData.bind(this));
 	}
@@ -72,11 +76,17 @@ export class Editor {
 	}
 
 	private start(): void {
+		this._field.setScore(0);
+
 		this.doWithRecordHistory(() => {
 			this._field.start();
 		});
 
-		this._timeline.play();
+		this._timeline.play(undefined, () => {
+			// アニメーション再生後の処理
+			const chainInfo = this._field.getLastChainInfo();
+			if (chainInfo.length > 0) this._chainInfoArea.print(chainInfo);
+		});
 	}
 
 	private undo(): void {
@@ -94,6 +104,14 @@ export class Editor {
 			this._field.setField(redo);
 		}
 		this._timeline.play();
+	}
+
+	private clear(): void {
+		this._field.setScore(0);
+		this.doWithRecordHistory(() => {
+			this._field.clear();
+		});
+		this._timeline.play();	// score
 	}
 
 	/**

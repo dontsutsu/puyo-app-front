@@ -87,7 +87,7 @@ label.button, a.button {
 	color: #4B4B4B;
 	
 	.container {
-		margin: 0 20px 0 0;
+		margin: 0 30px 0 0;
 
 		div {
 			margin: 0 0 10px 0;
@@ -200,10 +200,82 @@ hr {
 		th, td {
 			border: 1px solid #A0A0A0;
 			padding: 0.2em 0.5em;
+			white-space: nowrap;
 		}
 
 		th {
 			background-color: #D0D0D0;
+		}
+	}
+}
+
+#chainInfoWrapper {
+	max-height: 450px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#chainInfoTable {
+	font-size: 11px;
+	background-color: #E0E0E0;
+	thead {
+		th {
+			position: sticky;
+			top: 0;
+			writing-mode: vertical-rl;
+			background-color: #40B0FF;
+			border: 1px solid #3090CC;
+			color: #FFFFFF; 
+			padding: 5px 0;
+			text-shadow:
+            1px 1px 1px #404040, -1px -1px 1px #404040,
+           -1px 1px 1px #404040,  1px -1px 1px #404040,
+            1px 0px 1px #404040, -1px -0px 1px #404040,
+            0px 1px 1px #404040,  0px -1px 1px #404040;
+
+			&.chain, &.erase, &.color {
+				min-width: 30px;
+			}
+
+			&.score, &.connect {
+				min-width: 50px;
+			}
+
+		}
+	}
+
+	tbody {
+		td {
+			text-align: right;
+			padding: 0 5px;
+		}
+
+		tr.detail {
+			td {
+				background-color: #FFFFFF;
+			}
+		}
+
+		tr.total {
+			font-weight: bold;
+			td {
+				background-color: #BBFFFF;
+
+				&.ojama {
+					text-align: left !important;
+
+					.img-ojama {
+						margin: 3px 1px;
+						vertical-align: bottom;
+					}
+				}
+			}
+		}
+
+		tr.empty {
+			td {
+				height: 5px;
+			}
 		}
 	}
 }

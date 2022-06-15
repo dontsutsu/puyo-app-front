@@ -19,7 +19,11 @@
 				<a id="undo" class="button button-m-size"><img src="static/images/icon/undo.svg"><span>元に戻す</span></a>
 				<a id="redo" class="button button-m-size"><img src="static/images/icon/redo.svg"><span>やり直す</span></a>
 			</div>
-			<div>
+			<div class="font-0">
+				<a id="clear" class="button button-m-size"><img src="static/images/icon/clear.svg"><span>クリア</span></a>
+			</div>
+			<hr>
+			<div class="font-0">
 				<a id="openImageForm" class="button button-l-size"><img src="static/images/icon/picture.svg"><span>画像読み込み</span></a>
 			</div>
 			<hr>
@@ -27,6 +31,10 @@
 				<a id="start" class="button button-m-size"><img src="static/images/icon/start.svg"><span>連鎖実行</span></a>
 			</div>
 			<%- include("partials/_timelineSetting") %>
+		</div>
+
+		<div class="container">
+			<%- include("partials/_chainInfoArea") %>
 		</div>
 
 		<div class="container">

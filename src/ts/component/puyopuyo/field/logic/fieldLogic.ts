@@ -155,6 +155,16 @@ export class FieldLogic {
 		this._canvas.setGuide(tsumo, tsumoToCoord.axis, tsumoToCoord.child);
 	}
 
+	public clear(): void {
+		for (let y = 0; y < PuyoConst.Field.Y_SIZE - 1; y++) {
+			for (let x = 0; x < PuyoConst.Field.X_SIZE; x++) {
+				const coord = new Coordinate(x, y);
+				const color = PuyoConst.Color.N;
+				this.changeColor(coord, color);	// この中でview更新
+			}
+		}
+	}
+
 	private getTsumoToCoord(tsumo: TsumoInterface): {axis: Coordinate, child: Coordinate} {
 		const heights = this.getHeights();
 		
@@ -350,6 +360,7 @@ export class FieldLogic {
 
 		let chainInfo: ChainInfoInterface = {
 			chain: chain,
+			erase: erase,
 			color: colorArray.length,
 			connect: connectList,
 			score: score
