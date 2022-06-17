@@ -20,10 +20,12 @@ export class TimelineQueue {
 	private constructor() {
 		this._queue = [];
 		this._isPlaying = false;
-		this._mode = 1;
-		this._speed = 3;
+		
 		this._$mode = $("input:radio[name='mode']");
+		this._mode = Number(this._$mode.filter(":checked").val() as string);
+
 		this._$speed = $("#speed");
+		this._speed = Number(this._$speed.val());
 
 		this._$mode.on("change", () => {
 			this._mode = Number(this._$mode.filter(":checked").val() as string);

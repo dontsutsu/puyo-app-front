@@ -257,16 +257,38 @@ hr {
 		}
 
 		tr.total {
-			font-weight: bold;
 			td {
+				font-weight: bold;
+				height: 22px;
 				background-color: #BBFFFF;
 
 				&.ojama {
 					text-align: left !important;
+					vertical-align: bottom;
+					padding-bottom: 3px;
 
 					.img-ojama {
-						margin: 3px 1px;
+						margin: 0px 1px;
 						vertical-align: bottom;
+
+						&.ojama-s {
+							height: 13px;
+						}
+						&.ojama-m {
+							height: 17px;
+						}
+						&.ojama-rock {
+							height: 18px;
+						}
+						&.ojama-star {
+							height: 20px;
+						}
+						&.ojama-moon {
+							height: 20px;
+						}
+						&.ojama-crown {
+							height: 18px;
+						}
 					}
 				}
 			}

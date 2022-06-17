@@ -56,22 +56,22 @@ export class ChainInfoArea {
 		let ojamaNum = PuyoUtil.calcOjamaNum(totalScore);
 		while (ojamaNum > 0 && tmp.length < 6) {
 			if (ojamaNum >= 720) {
-				tmp.push(ChainInfoArea.OJAMA_CROWN());
+				tmp.push(ChainInfoArea.ojamaCrown());
 				ojamaNum -= 720;
 			} else if (ojamaNum >= 360) {
-				tmp.push(ChainInfoArea.OJAMA_MOON());
+				tmp.push(ChainInfoArea.ojamaMoon());
 				ojamaNum -= 360;
 			} else if (ojamaNum >= 180) {
-				tmp.push(ChainInfoArea.OJAMA_STAR());
+				tmp.push(ChainInfoArea.ojamaStar());
 				ojamaNum -= 180;
 			} else if (ojamaNum >= 30) {
-				tmp.push(ChainInfoArea.OJAMA_ROCK());
+				tmp.push(ChainInfoArea.ojamaRock());
 				ojamaNum -= 30;
 			} else if (ojamaNum >= 6) {
-				tmp.push(ChainInfoArea.OJAMA_M());
+				tmp.push(ChainInfoArea.ojamaM());
 				ojamaNum -= 6;
 			} else {
-				tmp.push(ChainInfoArea.OJAMA_S());
+				tmp.push(ChainInfoArea.ojamaS());
 				ojamaNum -= 1;
 			}
 		}
@@ -79,27 +79,27 @@ export class ChainInfoArea {
 		return tmp;
 	}
 
-	private static OJAMA_S(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-s.svg", "width": "12" });
+	private static ojamaS(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-s", "src": "static/images/ojama/ojama-s.svg" });
 	}
 
-	private static OJAMA_M(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-m.svg", "width": "18" });
+	private static ojamaM(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-m", "src": "static/images/ojama/ojama-m.svg" });
 	}
 
-	private static OJAMA_ROCK(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-rock.svg", "width": "18" });
+	private static ojamaRock(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-rock", "src": "static/images/ojama/ojama-rock.svg" });
 	}
 
-	private static OJAMA_STAR(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-star.svg", "width": "18" });
+	private static ojamaStar(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-star", "src": "static/images/ojama/ojama-star.svg" });
 	}
 
-	private static OJAMA_MOON(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-moon.svg", "width": "18" });
+	private static ojamaMoon(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-moon", "src": "static/images/ojama/ojama-moon.svg" });
 	}
 
-	private static OJAMA_CROWN(): JQuery<HTMLElement> {
-		return $("<img>", { "class": "img-ojama", "src": "static/images/ojama/ojama-crown.svg", "width": "18" });
+	private static ojamaCrown(): JQuery<HTMLElement> {
+		return $("<img>", { "class": "img-ojama ojama-crown", "src": "static/images/ojama/ojama-crown.svg" });
 	}
 }

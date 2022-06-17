@@ -156,7 +156,7 @@ export class FieldLogic {
 	}
 
 	public clear(): void {
-		for (let y = 0; y < PuyoConst.Field.Y_SIZE - 1; y++) {
+		for (let y = 0; y < PuyoConst.Field.Y_SIZE; y++) {
 			for (let x = 0; x < PuyoConst.Field.X_SIZE; x++) {
 				const coord = new Coordinate(x, y);
 				const color = PuyoConst.Color.N;
